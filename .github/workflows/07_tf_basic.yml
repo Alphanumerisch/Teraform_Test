@@ -35,11 +35,11 @@ jobs:
               working-directory: tf-basic
               run: terraform plan -no-color
             - name: Apply (optional)
-              if: ${{ inputs.apply == 'yes' }}
+              if: ${{ inputs.apply == 'true' }}
               working-directory: tf-basic
               run: terraform apply --auto-approve -no-color
             - name: Artefakt einsammeln
-              if: ${{ inputs.apply == 'yes' }}
+              if: ${{ inputs.apply == 'true' }}
               uses: actions/upload-artifact@v4
               with:
                 name: tf-out
