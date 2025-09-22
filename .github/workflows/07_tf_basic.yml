@@ -1,0 +1,48 @@
+name: 07 TF Basic
+on:
+
+   workflow_dispatch:
+    inputs:
+        region:
+            description: "The region to deploy to"
+            type: choice
+            options: [eu-central-1, eu-west-1, eu-west-2]
+            default: eu-central-1
+        message:
+            description: Message
+            default: "Hello, World!"
+        apply:
+            description: Apply?
+            type: choice
+            options: [yes, no]
+            default: no
+jobs:
+    tf:
+        runs-on: ubuntu-latest
+        defaults: { run: { shell: bash}  }
+        env:
+            TF_INPUT: "0"
+            TF_IN_AUTOMATION: "1"
+            TF_VAR_region: ${{ inputs.region }}
+            TF_VAR_Message: ${{ inputs.message }}
+        steps:
+            - uses: actions/checkout@v4
+            - uses: hashicorp/setup-terraform@v4
+              with: {terraform_version: "1.9.7"}
+            - working-directory: tf-basic
+              run: terraform init -input=false
+            - name: Plan
+              working-directory: tf-basic
+              run: terraform plan -no-color
+            - name: Apply (optional)
+              if: ${{ inputs.apply == 'yes' }}
+              working-directory: tf-basic
+              run: terraform apply --auto-approve -no-color
+            - name: Artefakt einsammeln
+              if: ${{ inputs.apply == 'yes' }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: tf-out
+                path: tf-basic/out_*.txt
+
+
