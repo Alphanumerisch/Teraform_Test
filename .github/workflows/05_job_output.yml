@@ -1,17 +1,17 @@
-
 name: 05 Outputs
-on: workflow_dispatch
+on: [workflow_dispatch]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        outputs:
-            image: ${{ steps.mk.image.outputs.image }}
-            steps:
-                - id mk
-                run: echo "image=repo/app:1_0.0.$(date +%H%M)" >> $GITHUB_OUTPUT
-deploy:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.mk.outputs.image }}
+    steps:
+      - id: mk
+        run: echo "image=repo/app:1.0.$(date +%H%M)" >> $GITHUB_OUTPUT
+
+  deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
-        - run echo "Deploying ${{ needs.build.outputs.image}}"
+      - run: echo "Deploying ${{ needs.build.outputs.image }}"
