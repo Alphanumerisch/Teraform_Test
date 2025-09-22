@@ -14,4 +14,5 @@ jobs:
             NODE: ${{ matrix.node}}
         steps:
             - run: node -v || true
-            - run: echo "Matrix: REGION=$REGION NODE=$NODE"
+            - run: |
+                echo "Matrix: REGION=$REGION NODE=$NODE"
