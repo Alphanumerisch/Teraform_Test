@@ -1,0 +1,17 @@
+name: 06 Matrix
+on: workflow_dispatch
+
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                region: [eu-central-1, eu-west-1, eu-west-2]
+                node: [1, 2, 3]
+        env:
+            REGION: ${{ matrix.region}}
+            NODE: ${{ matrix.node}}
+        steps:
+            - run: node -v || true
+            - run: echo "Matrix: REGION=$REGION NODE=$NODE"
