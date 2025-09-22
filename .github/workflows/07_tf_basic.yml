@@ -1,7 +1,7 @@
 name: 07 TF Basic
 on:
 
-   workflow_dispatch:
+  workflow_dispatch:
     inputs:
         region:
             description: "The region to deploy to"
@@ -27,7 +27,7 @@ jobs:
             TF_VAR_Message: ${{ inputs.message }}
         steps:
             - uses: actions/checkout@v4
-            - uses: hashicorp/setup-terraform@v4
+            - uses: hashicorp/setup-terraform@v3
               with: {terraform_version: "1.9.7"}
             - working-directory: tf-basic
               run: terraform init -input=false
