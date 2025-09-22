@@ -1,0 +1,13 @@
+name: 04 Github Env
+on: workflow_dispatch
+
+jobs:
+    demo:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Build dynamic env
+              run: |
+                echo "BUILD_TS=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+                echo "SAN_BRANCH=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
+            - run: echo "BUILD_TS=$BUILD_TS SAN_BRANCH=$SAN_BRANCH"
+
