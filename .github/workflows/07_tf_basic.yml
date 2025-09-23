@@ -18,8 +18,8 @@ on:
             default: no
 jobs:
     tf:
-        runs-on: self-hosted
-        defaults: { run: { shell: bash}  }
+        runs-on: self-hosted hyperv1
+        defaults: { run: { shell: pwsh}  }
         env:
             TF_INPUT: "0"
             TF_IN_AUTOMATION: "1"
