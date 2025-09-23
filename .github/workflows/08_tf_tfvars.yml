@@ -12,11 +12,11 @@ on:
                 default: dev
             number:
                 description: "The number of the config file"
-                default: 3
-                apply:
-                    description: Apply?
-                    options: [yes, no]
-                    default: no
+                default: "3"
+            apply:
+                type: choice
+                options: [yes, no]
+                default: no
 jobs:
     tf:
         runs-on: ubuntu-latest
@@ -26,8 +26,8 @@ jobs:
               with: {terraform_version: "1.9.7"}
 
             - name: tfvars schreiben
-             working-direcotory: tf-tfvars
-             runs: |
+              working-directory: tf-tfvars
+              run: |
                 cat > values.auto.tfvars <<EOF
                 name = "${{ inputs.name }}"
                 env = "${{ inputs.env }}"
@@ -48,7 +48,7 @@ jobs:
               run: terraform apply --auto-approve -no-color
 
             - name: Artefakt (cfg_*.ini)
-              if: ${{ input.apply == 'true' }}
+              if: ${{ inputs.apply == 'true' }}
               uses: action/upload-artifact@v4
               with:
                 name: cfg
