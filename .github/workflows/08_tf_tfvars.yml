@@ -1,0 +1,59 @@
+name: 08 TF TFVars
+on:
+    workflow_dispatch:
+        inputs:
+            name:
+                description: "The name of the config file"
+                default: meister
+            env:
+                description: "The environment"
+                type: choice
+                options: [dev, test, prod]
+                default: dev
+            number:
+                description: "The number of the config file"
+                default: 3
+                apply:
+                    description: Apply?
+                    options: [yes, no]
+                    default: no
+jobs:
+    tf:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: checkout@v4
+            - uses: hashicorp/setup-terraform@v3
+              with: {terraform_version: "1.9.7"}
+
+            - name: tfvars schreiben
+             working-direcotory: tf-tfvars
+             runs: |
+                cat > values.auto.tfvars <<EOF
+                name = "${{ inputs.name }}"
+                env = "${{ inputs.env }}"
+                number = "${{ inputs.number }}"
+                EOF
+                echo "== values.auto.tfvars =="
+                cat values.auto.tfvars
+
+            - name: Init & Plan
+              working-directory: tf-tfvars
+              run: |
+                terraform init -input=false
+                terraform plan -no-color
+            
+            - name: Apply (optional)
+              if: ${{ inputs.apply == 'true' }}
+              working-directory: tf-tfvars
+              run: terraform apply --auto-approve -no-color
+
+            - name: Artefakt (cfg_*.ini)
+              if: ${{ input.apply == 'true' }}
+              uses: action/upload-artifact@v4
+              with:
+                name: cfg
+                path: tf-tfvars/cfg_*.ini
+
+
+
+            
