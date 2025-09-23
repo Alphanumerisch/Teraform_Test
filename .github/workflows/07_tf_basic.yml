@@ -18,7 +18,7 @@ on:
             default: no
 jobs:
     tf:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted Windows
         defaults: { run: { shell: bash}  }
         env:
             TF_INPUT: "0"
