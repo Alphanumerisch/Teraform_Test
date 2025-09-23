@@ -5,7 +5,7 @@ terraform {
 }
 
 resource "local_file" "cfg" {
-    filename = "${path.module/cfg_${var.env}_${var.name}.ini}"
+    filename = "${path.module}/cfg_${var.env}_${var.name}.ini}"
     content = <<EOT
 name = ${var.name}
 env = ${var.env}
