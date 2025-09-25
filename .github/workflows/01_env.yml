@@ -1,15 +1,17 @@
-name: 01 Env Basic
+name: 01 Env basic
 on: workflow_dispatch
 
 env:
   GLOBAL_FLAG: "on"
 
+
 jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo GLOBAL_FLAG=$GLOBAL_FLAG
+      - run: echo "GOBAL_FLAGS=$GLOBAL_FLAGS"
       - name: Steb-env überschreibt
         env:
           GLOBAL_FLAG: "off"
-        run: echo GLOBAL_FLAG=$GLOBAL_FLAG
+        
+        run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"^
