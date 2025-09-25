@@ -1,9 +1,8 @@
-name: 01 Env basic
+name: 01 Env Basic
 on: workflow_dispatch
 
 env:
   GLOBAL_FLAG: "on"
-
 
 jobs:
   demo:
@@ -13,6 +12,6 @@ jobs:
       - name: Steb-env überschreibt
         env:
           GLOBAL_FLAG: "off"
-        
         run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"
+        
         
