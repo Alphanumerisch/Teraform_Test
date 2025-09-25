@@ -9,9 +9,10 @@ jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "GOBAL_FLAGS=$GLOBAL_FLAG"
+      - run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"
       - name: Steb-env überschreibt
         env:
           GLOBAL_FLAG: "off"
         
-        run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"^
+        run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"
+        
