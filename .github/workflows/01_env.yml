@@ -1,8 +1,9 @@
-name: 01 Env Basic
+name: 01 Env basic
 on: workflow_dispatch
 
 env:
   GLOBAL_FLAG: "on"
+  SET_FLAG: "off"
 
 jobs:
   demo:
@@ -13,5 +14,14 @@ jobs:
         env:
           GLOBAL_FLAG: "off"
         run: echo "GLOBAL_FLAG=$GLOBAL_FLAG"
+        
+      - name: Set Flag  
+        run: echo "SET_FLAG=$SET_FLAG"
+      
+      - name: Steb-env überschreibt
+        env:
+          SET_FLAG: "on"
+        run: echo "SET_FLAG=$SET_FLAG"
+        
         
         
